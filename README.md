@@ -1,50 +1,213 @@
-# Welcome to your Expo app 👋
+# AnimatedBottomBar ✨
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A beautiful, animated bottom navigation component for React Native with an expandable input field. Perfect for modern mobile applications.
 
-## Get started
+![Demo](https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue)
 
-1. Install dependencies
+## 🎥 Preview
 
-   ```bash
-   npm install
-   ```
+The component features:
+- **Pill-shaped navigation** that transforms into an input field
+- **Smooth spring animations** using react-native-reanimated v3
+- **Page lifting effect** when input is active
+- **Clean, minimal design** with dark/light mode support
+- **TypeScript** support out of the box
+- **Accessibility** optimized
 
-2. Start the app
+## 🚀 Features
 
-   ```bash
-   npx expo start
-   ```
+- ✅ **Morphing Animation**: Pill to circle transformation
+- ✅ **Input Integration**: Slide-up input field with send button
+- ✅ **Spring Physics**: Smooth, natural animations
+- ✅ **Theme Support**: Automatic dark/light mode adaptation
+- ✅ **Keyboard Handling**: Smart keyboard avoidance
+- ✅ **Accessibility**: Full a11y support
+- ✅ **TypeScript**: Type-safe props and callbacks
+- ✅ **Customizable**: Colors, placeholder, callbacks
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## 📦 Installation
 
 ```bash
-npm run reset-project
+npm install react-native-reanimated react-native-safe-area-context
+# or
+yarn add react-native-reanimated react-native-safe-area-context
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### iOS Setup
+```bash
+cd ios && pod install
+```
 
-## Learn more
+For complete react-native-reanimated setup, follow the [official guide](https://docs.swmansion.com/react-native-reanimated/docs/fundamentals/getting-started/).
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🎯 Usage
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Basic Setup
 
-## Join the community
+```tsx
+import { BottomBarProvider } from './components/AnimatedBottomBar';
+import { AnimatedBottomBar } from './components/AnimatedBottomBar';
 
-Join our community of developers creating universal apps.
+export default function App() {
+  const handleSubmitInput = (text: string) => {
+    console.log('User input:', text);
+    // Handle the input text
+  };
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+  return (
+    <BottomBarProvider 
+      onSubmitInput={handleSubmitInput}
+      activeColor="#007AFF"
+      inputPlaceholder="Ask me something..."
+    >
+      <YourMainContent />
+      <AnimatedBottomBar />
+    </BottomBarProvider>
+  );
+}
+```
+
+### With Todo List Integration
+
+```tsx
+import { useTodoList } from './hooks/useTodoList';
+import { TodoList } from './components/TodoList';
+
+export default function TodoApp() {
+  const { todos, addTodo, toggleTodo } = useTodoList();
+
+  return (
+    <BottomBarProvider onSubmitInput={addTodo}>
+      <TodoList 
+        todos={todos} 
+        onToggleTodo={toggleTodo} 
+      />
+      <AnimatedBottomBar />
+    </BottomBarProvider>
+  );
+}
+```
+
+## 🎨 API Reference
+
+### BottomBarProvider Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| `onSubmitInput` | `(text: string) => void` | - | Callback when user submits input |
+| `activeColor` | `string` | `#007AFF` | Primary color for active states |
+| `inputPlaceholder` | `string` | `Ask me about your expenses...` | Input field placeholder |
+
+### AnimatedBottomBar Props
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| All standard navigation props | - | - | Customize icons and behavior |
+
+## 🏗️ Project Structure
+
+```
+components/
+├── AnimatedBottomBar/
+│   ├── AnimatedBottomBar.tsx    # Main navigation component
+│   ├── BottomBarProvider.tsx    # Context provider with input logic
+│   ├── icons.ts                 # Icon definitions
+│   ├── types.ts                 # TypeScript definitions
+│   └── index.ts                 # Exports
+├── TodoItem.tsx                 # Animated todo item
+├── TodoList.tsx                 # Todo list container
+└── hooks/
+    └── useTodoList.ts          # Todo state management
+```
+
+## 🎭 Animations
+
+The component uses several animation techniques:
+
+- **Spring Physics**: Natural, bouncy transitions
+- **Page Lifting**: Content moves up when input appears
+- **Icon Morphing**: Smooth icon transitions
+- **Opacity Fades**: Elegant overlay effects
+- **Scale Transforms**: Responsive touch feedback
+
+## 🌙 Theme Support
+
+Automatically adapts to system color scheme:
+
+```tsx
+// Dark mode colors
+const darkTheme = {
+  background: '#1C1C1E',
+  text: '#FFFFFF',
+  border: '#444444'
+};
+
+// Light mode colors  
+const lightTheme = {
+  background: '#FFFFFF',
+  text: '#000000',
+  border: '#CCCCCC'
+};
+```
+
+## 🔧 Development
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/expo-hidden-input.git
+cd expo-hidden-input
+```
+
+2. **Install dependencies**
+```bash
+npm install
+```
+
+3. **Start the development server**
+```bash
+npx expo start
+```
+
+4. **Open in simulator/device**
+   - Press `i` for iOS simulator
+   - Press `a` for Android emulator
+   - Scan QR code with Expo Go
+
+## 🤝 Contributing
+
+Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📱 Compatibility
+
+- **React Native**: 0.72+
+- **Expo**: SDK 49+
+- **iOS**: 13.0+
+- **Android**: API 21+
+- **TypeScript**: 4.9+
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/) for amazing animations
+- [Expo](https://expo.dev) for the development platform
+- [React Native](https://reactnative.dev) community for inspiration
+
+## 📫 Contact
+
+- GitHub: [@yourusername](https://github.com/yourusername)
+- Twitter: [@yourhandle](https://twitter.com/yourhandle)
+
+---
+
+⭐ If you found this useful, please consider giving it a star!
